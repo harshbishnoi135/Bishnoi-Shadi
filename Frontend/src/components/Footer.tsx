@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="mt-6 border-t border-gray-200 pt-6 text-center text-gray-500 text-sm">
-          <p>&copy; 2024 Bishnoi Shadi. All rights reserved.</p>
+          <p>&copy; 2024 Bishnoi Shaadi. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -12,6 +12,7 @@ import ChatWidget from "@/components/ChatWidget";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import About from "@/pages/About";
 import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 import ProfileRegistration from "@/pages/ProfileRegistration";
 import Profile from "@/pages/Profile";
 import Matches from "@/pages/Matches";
@@ -38,6 +39,7 @@ const App = () => (
                   <Route path="/" element={<About />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
                   <Route path="/pricing" element={<Pricing />} />
                   
                   {/* Protected Routes */}

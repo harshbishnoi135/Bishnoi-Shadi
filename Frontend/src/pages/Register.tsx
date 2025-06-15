@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -7,14 +6,15 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { useLoginMutation } from '@/slices/usersApiSlice';
+import { useRegisterMutation } from '@/slices/usersApiSlice';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
-  const { login: setlogin } = useAuth();
+  const [register, { isLoading: registerLoading }] = useRegisterMutation();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -22,20 +22,37 @@ const Login: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    try {
-      console.log("log try email", email);
-      const res = await login({ email, password }).unwrap()
-      console.log("log res", res);
-      await setlogin(res);
+    if(password.length < 8) {
       toast({
-        title: "Login Successful",
+        title: "Password must be at least 8 characters long",
+        description: "Please try again.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+    else if (password !== confirmPassword) {
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match. Please try again.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const res = await register({ email, password }).unwrap();
+      await login(res);
+      toast({
+        title: "Registration Successful",
         description: "Welcome to Bishnoi Shaadi!",
       });
       navigate('/profile-registration');
-    } catch (error) {
+    } catch (err) {
       toast({
-        title: "Login Failed",
-        description: "Please check your credentials and try again.",
+        title: err?.data?.message || err.error,
+        description: "Please check your details and try again.",
         variant: "destructive"
       });
     } finally {
@@ -43,10 +60,10 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
+  const handleGoogleRegister = () => {
     toast({
-      title: "Google Login",
-      description: "Google login functionality will be implemented soon.",
+      title: "Google Registration",
+      description: "Google registration functionality will be implemented soon.",
     });
   };
 
@@ -56,15 +73,15 @@ const Login: React.FC = () => {
       <div className="flex-1 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-            <p className="text-gray-600">Sign in to your Bishnoi Shaadi account</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+            <p className="text-gray-600">Join Bishnoi Shaadi to find your perfect match</p>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>Login to Your Account</CardTitle>
+              <CardTitle>Register New Account</CardTitle>
               <CardDescription>
-                Enter your credentials to access your profile
+                Enter your details to create your account
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -88,7 +105,19 @@ const Login: React.FC = () => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder="Create a password"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm your password"
                     required
                   />
                 </div>
@@ -98,7 +127,7 @@ const Login: React.FC = () => {
                   className="w-full bg-bishnoi-orange hover:bg-orange-600"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing In..." : "Sign In"}
+                  {isLoading ? "Creating Account..." : "Create Account"}
                 </Button>
 
                 <div className="relative">
@@ -116,7 +145,7 @@ const Login: React.FC = () => {
                   type="button"
                   variant="outline"
                   className="w-full flex items-center justify-center gap-2"
-                  onClick={handleGoogleLogin}
+                  onClick={handleGoogleRegister}
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -129,10 +158,10 @@ const Login: React.FC = () => {
 
                 <div className="text-center">
                   <Link 
-                    to="/register" 
+                    to="/login" 
                     className="text-bishnoi-orange hover:text-orange-600 text-sm"
                   >
-                    Create new account
+                    Already have an account? Sign in
                   </Link>
                 </div>
               </form>
@@ -150,10 +179,10 @@ const Login: React.FC = () => {
             className="w-full h-80 object-cover rounded-lg shadow-lg mb-6"
           />
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Find Your Perfect Match
+            Start Your Journey
           </h2>
           <p className="text-gray-600">
-            Join our community and discover meaningful connections within the Bishnoi tradition.
+            Create your account and begin your journey to find your perfect match within the Bishnoi community.
           </p>
         </div>
       </div>
@@ -161,4 +190,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

@@ -22,7 +22,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold text-gray-900">
-            Bishnoi Shadi
+            Bishnoi Shaadi
           </Link>
 
           {/* Navigation - Show on all pages except login */}

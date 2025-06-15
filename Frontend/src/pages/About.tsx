@@ -35,7 +35,7 @@ const About: React.FC = () => {
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Motive</h2>
             <div className="max-w-4xl mx-auto text-lg text-gray-600 leading-relaxed">
               <p className="mb-6">
-                At Bishnoi Shadi, our primary motive is to strengthen the bonds within our sacred Bishnoi community 
+                At Bishnoi Shaadi, our primary motive is to strengthen the bonds within our sacred Bishnoi community 
                 by facilitating meaningful matrimonial connections that honor our ancestral values while embracing 
                 modern sensibilities. We believe that marriage is not just a union of two individuals, but a sacred 
                 bond that connects families, preserves traditions, and builds a stronger community for future generations.
@@ -84,7 +84,7 @@ const About: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              How Bishnoi Shadi is Different from Other Platforms
+              How Bishnoi Shaadi is Different from Other Platforms
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
               Unlike generic matrimonial platforms, we are specifically designed for the Bishnoi community, 

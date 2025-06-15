@@ -14,88 +14,92 @@ const userSchema = mongoose.Schema(
       minlength: 6,
     },
     fullProfile: {
-      firstame: {
-        type: String,
-        required: true,
+      type: {
+        firstName: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        lastName: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        gender: {
+          type: String,
+          required: function() { return this.fullProfile !== null; },
+          enum: ['M', 'F']
+        },
+        dateOfBirth: {
+          type: Date,
+          required: function() { return this.fullProfile !== null; }
+        },
+        height: {
+          type: Number,
+          required: function() { return this.fullProfile !== null; }
+        },
+        city: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        state: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        country: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        phone: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        maritalStatus: {
+          type: String,
+          required: function() { return this.fullProfile !== null; },
+          enum: ['Single', 'Divorced', 'Widowed']
+        },
+        occupation: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        annualIncome: {
+          type: Number,
+          required: function() { return this.fullProfile !== null; }
+        },
+        lastGraduatingCollege: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        fieldOfStudy: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        fatherGotra: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        motherGotra: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        grandmotherGotra: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        motherMotherGotra: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        fatherOccupation: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        },
+        motherOccupation: {
+          type: String,
+          required: function() { return this.fullProfile !== null; }
+        }
       },
-      lastName: {
-        type: String,
-        required: true,
-      },
-      gender: {
-        type: String,
-        required: true,
-        enum: ['M', 'F']
-      },
-      dateOfBirth: {
-        type: Date,
-        required: true,
-      },
-      height: {
-        type: Number,
-        required: true,
-      },
-      city: {
-        type: String,
-        required: true,
-      },
-      state: {
-        type: String,
-        required: true,
-      },
-      country: {
-        type: String,
-        required: true,
-      },
-      phone: {
-        type: String,
-        required: true,
-      },
-      maritalStatus: {
-        type: String,
-        required: true,
-        enum: ['Single', 'Divorced', 'Widowed']
-      },
-      occupation: {
-        type: String,
-        required: true,
-      },
-      annualIncome: {
-        type: Number,
-        required: true,
-      },
-      lastGraduatingCollege: {
-        type: String,
-        required: true,
-      },
-      fieldOfStudy: {
-        type: String,
-        required: true,
-      },
-      fatherGotra: {
-        type: String,
-        required: true,
-      },
-      motherGotra: {
-        type: String,
-        required: true,
-      },
-      grandmotherGotra: {
-        type: String,
-        required: true,
-      },
-      motherMotherGotra: {
-        type: String,
-        required: true,
-      },
-      fatherOccupation: {
-        type: String,
-        required: true,
-      },
-      motherOccupation: {
-        type: String,
-        required: true,
-      },
+      required: false,
+      default: null
     },
     accountCreated: {
       type: Date,
