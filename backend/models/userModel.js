@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema(
           required: function() { return this.fullProfile !== null; }
         },
         height: {
-          type: Number,
+          type: String,
           required: function() { return this.fullProfile !== null; }
         },
         city: {
@@ -48,14 +48,14 @@ const userSchema = mongoose.Schema(
           type: String,
           required: function() { return this.fullProfile !== null; }
         },
-        phone: {
+        phoneNumber: {
           type: String,
           required: function() { return this.fullProfile !== null; }
         },
         maritalStatus: {
           type: String,
           required: function() { return this.fullProfile !== null; },
-          enum: ['Single', 'Divorced', 'Widowed']
+          enum: ['Never Married', 'Divorced', 'Widowed']
         },
         occupation: {
           type: String,

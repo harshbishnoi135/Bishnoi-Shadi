@@ -43,6 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     email,
     password,
+    createdAt: Date.now(),
   });
 
   if (user) {
@@ -79,15 +80,37 @@ const getMyUserProfile = asyncHandler(async (req, res) => {
 
     if(user){
         res.status(200).json({
-          _id: user._id,
           fullProfile: user.fullProfile,
-          membership: user.membership,
         })
     }
     else {
         res.status(404);
         throw new Error("User not found");
     }
+});
+
+// @desc    Update my user profile
+// @route   PUT /api/users/myprofile
+// @access  Private
+const updateMyUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if(user) {
+    user.fullProfile = req.body;
+    user.updatedAt = Date.now();
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      firstName: updatedUser.fullProfile.firstName,
+    });
+  }
+  else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 
@@ -233,6 +256,7 @@ const getUsersByID = asyncHandler(async (req, res) => {
     registerUser,
     logoutUser,
     getMyUserProfile,
+    updateMyUserProfile,
     getUserProfile,
     getFullUserProfile,
     updateUserProfile,
