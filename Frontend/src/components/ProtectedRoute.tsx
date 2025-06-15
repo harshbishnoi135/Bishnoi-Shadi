@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,6 +12,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // If user is authenticated and has completed profile, prevent access to profile-registration
+  if (isAuthenticated && user?.isProfileComplete && location.pathname === '/profile-registration') {
+    return <Navigate to="/" replace />;
   }
 
   // If user is authenticated but hasn't completed profile and trying to access other pages

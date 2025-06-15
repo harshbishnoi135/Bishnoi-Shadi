@@ -20,6 +20,7 @@ import Favourites from "@/pages/Favourites";
 import ProfileDescription from "@/pages/ProfileDescription";
 import Pricing from "@/pages/Pricing";
 import NotFound from "./pages/NotFound";
+import PublicRoute from "@/components/PublicRoute";
 
 const queryClient = new QueryClient();
 
@@ -38,8 +39,22 @@ const App = () => (
                   {/* Public Routes */}
                   <Route path="/" element={<About />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
+                  <Route 
+                    path="/login" 
+                    element={
+                      <PublicRoute restricted>
+                        <Login />
+                      </PublicRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/register" 
+                    element={
+                      <PublicRoute>
+                        <Register />
+                      </PublicRoute>
+                    } 
+                  />
                   <Route path="/pricing" element={<Pricing />} />
                   
                   {/* Protected Routes */}

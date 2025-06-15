@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Header: React.FC = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,12 +27,14 @@ const Header: React.FC = () => {
           {/* Navigation - Show on all pages except login */}
           
             <nav className="hidden md:flex space-x-8">
-              <Link to="/about">
-                <Button variant="ghost" className="text-black hover:bg-gray-100">
-                  About
-                </Button>
-              </Link>
-              {isAuthenticated && (
+              {(!isAuthenticated || (isAuthenticated && user?.isProfileComplete)) && (
+                <Link to="/about">
+                  <Button variant="ghost" className="text-black hover:bg-gray-100">
+                    About
+                  </Button>
+                </Link>
+              )}
+              {isAuthenticated && user?.isProfileComplete && (
                 <>
                   <Link to="/profile">
                     <Button variant="ghost" className="text-black hover:bg-gray-100">

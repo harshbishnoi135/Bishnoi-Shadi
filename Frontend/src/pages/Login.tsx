@@ -29,11 +29,7 @@ const Login: React.FC = () => {
         title: "Login Successful",
         description: "Welcome to Bishnoi Shaadi!",
       });
-      if (res.registrationComplete === true) {
-        navigate('/');
-      } else {
-        navigate('/profile-registration');
-      }
+      navigate('/profile-registration');
     } catch (error) {
       toast({
         title: "Login Failed",
