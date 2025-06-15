@@ -7,13 +7,14 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useLoginMutation } from '@/slices/usersApiSlice';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
-  const { login } = useAuth();
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const { login: setlogin } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -22,7 +23,10 @@ const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await login(email, password);
+      console.log("log try email", email);
+      const res = await login({ email, password }).unwrap()
+      console.log("log res", res);
+      await setlogin(res);
       toast({
         title: "Login Successful",
         description: "Welcome to Bishnoi Shadi!",

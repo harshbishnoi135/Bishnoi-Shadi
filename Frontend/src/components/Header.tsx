@@ -15,7 +15,6 @@ const Header: React.FC = () => {
   };
 
   // Show navigation on all pages except login
-  const showNavigation = location.pathname !== '/login';
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -27,7 +26,7 @@ const Header: React.FC = () => {
           </Link>
 
           {/* Navigation - Show on all pages except login */}
-          {showNavigation && (
+          
             <nav className="hidden md:flex space-x-8">
               <Link to="/about">
                 <Button variant="ghost" className="text-black hover:bg-gray-100">
@@ -38,12 +37,12 @@ const Header: React.FC = () => {
                 <>
                   <Link to="/profile">
                     <Button variant="ghost" className="text-black hover:bg-gray-100">
-                      Profile
+                      My Profile
                     </Button>
                   </Link>
                   <Link to="/matches">
                     <Button variant="ghost" className="text-black hover:bg-gray-100">
-                      Matches
+                      Search
                     </Button>
                   </Link>
                   <Link to="/favourites">
@@ -53,11 +52,11 @@ const Header: React.FC = () => {
                   </Link>
                 </>
               )}
-              <Link to="/pricing">
+              {/* <Link to="/pricing">
                 <Button variant="ghost" className="text-black hover:bg-gray-100">
                   Membership
                 </Button>
-              </Link>
+              </Link> */}
               {isAuthenticated ? (
                 <Button 
                   variant="ghost" 
@@ -74,16 +73,15 @@ const Header: React.FC = () => {
                 </Link>
               )}
             </nav>
-          )}
 
           {/* Mobile menu button */}
-          {showNavigation && (
+          
             <div className="md:hidden">
               <Button variant="ghost" size="sm">
                 ☰
               </Button>
             </div>
-          )}
+
         </div>
       </div>
     </header>
