@@ -13,95 +13,89 @@ const userSchema = mongoose.Schema(
       required: true,
       minlength: 6,
     },
-    firstame: {
-      type: String,
-      required: false,
-    },
-    lastName: {
-      type: String,
-      required: false,
-    },
-    gender: { 
-      type: String,
-      required: false,
-      enum: ['M', 'F']
-    },
-    dateOfBirth: {
-      type: Date,
-      required: true,
-    },
-    age: {
-      type: Number,
-      required: false,
-    },
-    height: {
-      type: Number,
-      required: false,
-    },
-    city: {
-      type: String,
-      required: false,
-    },
-    state: {
-      type: String,
-      required: false,
-    },
-    country: {
-      type: String,
-      required: false,
-    },
-    phone: {
-      type: String,
-      required: false,
-    },
-    maritalStatus: {
-      type: String,
-      required: false,
-      enum: ['Single', 'Divorced', 'Widowed']
-    },
-    occupation: {
-      type: String,
-    },
-    annualIncome: {
-      type: Number,
-      required: false,
-    },
-    lastGraduatingCollege: {
-      type: String,
-      required: false,
-    },
-    fieldOfStudy: {
-      type: String,
-      required: false,
-    },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    fatherGotra: {
-      type: String,
-      required: false,
-    },
-    motherGotra: {
-      type: String, 
-      required: false,
-    },
-    grandmotherGotra: {
-      type: String,
-      required: false,
-    },
-    motherMotherGotra: {
-      type: String,
-      required: false,
-    },
-    fatherOccupation: {
-      type: String,
-      required: false,
-    },
-    motherOccupation: {
-      type: String,
-      required: false,
+    fullProfile: {
+      firstame: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      },
+      gender: {
+        type: String,
+        required: true,
+        enum: ['M', 'F']
+      },
+      dateOfBirth: {
+        type: Date,
+        required: true,
+      },
+      height: {
+        type: Number,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+      country: {
+        type: String,
+        required: true,
+      },
+      phone: {
+        type: String,
+        required: true,
+      },
+      maritalStatus: {
+        type: String,
+        required: true,
+        enum: ['Single', 'Divorced', 'Widowed']
+      },
+      occupation: {
+        type: String,
+        required: true,
+      },
+      annualIncome: {
+        type: Number,
+        required: true,
+      },
+      lastGraduatingCollege: {
+        type: String,
+        required: true,
+      },
+      fieldOfStudy: {
+        type: String,
+        required: true,
+      },
+      fatherGotra: {
+        type: String,
+        required: true,
+      },
+      motherGotra: {
+        type: String,
+        required: true,
+      },
+      grandmotherGotra: {
+        type: String,
+        required: true,
+      },
+      motherMotherGotra: {
+        type: String,
+        required: true,
+      },
+      fatherOccupation: {
+        type: String,
+        required: true,
+      },
+      motherOccupation: {
+        type: String,
+        required: true,
+      },
     },
     accountCreated: {
       type: Date,
@@ -112,6 +106,11 @@ const userSchema = mongoose.Schema(
       type: Date,
       required: true,
       default: Date.now,
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     membership: [{
       plan: {

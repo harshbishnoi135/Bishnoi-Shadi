@@ -19,7 +19,6 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      // token: generateToken(user._id),
     });
   } else {
     res.status(401);
@@ -32,7 +31,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   const userExist = await User.findOne({ email });
   if (userExist) {
@@ -41,7 +40,6 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    name,
     email,
     password,
   });
@@ -72,18 +70,62 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-// @desc    Get user profile
-// @route   GET /api/users/profile
+// @desc    Get my user profile
+// @route   GET /api/users/myprofile
 // @access  Private
-const getUserProfile = asyncHandler(async (req, res) => {
+const getMyUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
     if(user){
         res.status(200).json({
           _id: user._id,
-          name: user.name,
+          fullProfile: user.fullProfile,
+          membership: user.membership,
+        })
+    }
+    else {
+        res.status(404);
+        throw new Error("User not found");
+    }
+});
+
+
+// @desc    Get user profile - only First Name, Last Name, Age, Occpation, Father Gotra, Mother Gotra
+// @route   GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+  const pageSize = 9;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword ? {frstName: {$regex: req.query.keyword, $options: 'i'}} : {};
+
+
+  const count = await User.countDocuments({...keyword});
+  const users = await User.find({...keyword}, {
+    _id: 1,
+    'fullProfile.firstame': 1,
+    'fullProfile.lastName': 1,
+    'fullProfile.dateOfBirth': 1,
+    'fullProfile.occupation': 1, 
+    'fullProfile.fatherGotra': 1,
+    'fullProfile.motherGotra': 1
+  })
+  .limit(pageSize)
+  .skip(pageSize * (page-1));
+  res.status(200).json({users, page, pages: Math.ceil(count/pageSize)});
+});
+
+// @desc    Get my user profile
+// @route   GET /api/users/myprofile
+// @access  Private
+const getFullUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+    if(user){
+        res.status(200).json({
+          _id: user._id,
           email: user.email,
-          isAdmin: user.isAdmin
+          fullProfile: user.fullProfile,
         })
     }
     else {
@@ -189,7 +231,9 @@ const getUsersByID = asyncHandler(async (req, res) => {
     authUser,
     registerUser,
     logoutUser,
+    getMyUserProfile,
     getUserProfile,
+    getFullUserProfile,
     updateUserProfile,
     getUsers,
     getUsersByID,
