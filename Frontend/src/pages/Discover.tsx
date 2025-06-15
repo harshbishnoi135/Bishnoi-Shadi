@@ -20,7 +20,7 @@ interface Profile {
   isFavorited: boolean;
 }
 
-const Matches: React.FC = () => {
+const Discover: React.FC = () => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -238,4 +238,4 @@ const Matches: React.FC = () => {
   );
 };
 
-export default Matches;
+export default Discover;

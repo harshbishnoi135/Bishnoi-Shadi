@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                   </Link>
                   <Link to="/matches">
                     <Button variant="ghost" className="text-black hover:bg-gray-100">
-                      Search
+                      Discover
                     </Button>
                   </Link>
                   <Link to="/favourites">

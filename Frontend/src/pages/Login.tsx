@@ -23,15 +23,17 @@ const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      console.log("log try email", email);
       const res = await login({ email, password }).unwrap()
-      console.log("log res", res);
       await setlogin(res);
       toast({
         title: "Login Successful",
         description: "Welcome to Bishnoi Shaadi!",
       });
-      navigate('/profile-registration');
+      if (res.registrationComplete === true) {
+        navigate('/');
+      } else {
+        navigate('/profile-registration');
+      }
     } catch (error) {
       toast({
         title: "Login Failed",

@@ -15,7 +15,7 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import ProfileRegistration from "@/pages/ProfileRegistration";
 import Profile from "@/pages/Profile";
-import Matches from "@/pages/Matches";
+import Discover from "@/pages/Discover";
 import Favourites from "@/pages/Favourites";
 import ProfileDescription from "@/pages/ProfileDescription";
 import Pricing from "@/pages/Pricing";
@@ -60,10 +60,10 @@ const App = () => (
                     } 
                   />
                   <Route 
-                    path="/matches" 
+                    path="/discover" 
                     element={
                       <ProtectedRoute>
-                        <Matches />
+                        <Discover />
                       </ProtectedRoute>
                     } 
                   />
